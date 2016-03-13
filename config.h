@@ -6,7 +6,8 @@
 
 /* appearance */
 static const char *fonts[] = {
-    "monospace:size=10"
+    "monospace:size=10",
+    "FontAwesome:size=10"
 };
 static const char dmenufont[]       = "monospace:size=10";
 static const char dwmpath[]         = "/home/bcheng/src/dwm/dwm";
@@ -41,14 +42,6 @@ static const char colors[NUMCOLORS][MAXCOLORS][17] = {
     { "#3c3836", "#928374", "#282828" },        /* [16] 11 - Tag occupied*/
 };
 
-/* tagging */
-static const char *tags[] = { "web", "code", "3", "4", "5", "6" };
-
-static const Rule rules[] = {
-    /* class      instance    title       tags mask     isfloating   monitor */
-    { "Firefox",  NULL,       NULL,       1 << 0,       0,           -1 },
-};
-
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
@@ -60,6 +53,22 @@ static const Layout layouts[] = {
     { "><>",      NULL },    /* no layout function means floating behavior */
     { "[M]",      monocle },
     { "[G]",      gaplessgrid },
+};
+
+/* tagging */
+static const Tag tags[] = {
+	/* name     layout         mfact     nmaster */
+	{"",       &layouts[0],   -1,       -1},
+	{"",       &layouts[2],   -1,       -1},
+	{"",       &layouts[3],   -1,       -1},
+	{"4",       &layouts[0],   -1,       -1},
+	{"5",       &layouts[0],   -1,       -1},
+	{"6",       &layouts[0],   -1,       -1}
+};
+
+static const Rule rules[] = {
+    /* class      instance    title       tags mask     isfloating   monitor */
+    { "Firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
 };
 
 /* key definitions */
