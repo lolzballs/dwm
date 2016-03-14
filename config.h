@@ -12,7 +12,9 @@ static const char *fonts[] = {
 static const char dmenufont[]       = "monospace:size=10";
 static const char dwmpath[]         = "/home/bcheng/src/dwm/dwm";
 static const unsigned int gappx     = 8;        /* gaps between windows */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int tagpadding = 50;      /* inner padding of tags */
+static const unsigned int taglinepx = 2;        /* size of tagline */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
@@ -48,11 +50,12 @@ static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 0 means don't respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
-    /* symbol     arrange function */
-    { "[]=",      tile },    /* first entry is default */
-    { "><>",      NULL },    /* no layout function means floating behavior */
-    { "[M]",      monocle },
-    { "[G]",      gaplessgrid },
+    /* symbol     gaps,      arrange function */
+    { "[]=",      True,      tile },    /* first entry is default */
+    { "><>",      True,      NULL },    /* no layout function means floating behavior */
+    { "[M]",      True,      monocle },
+    { "[G]",      True,      gaplessgrid },
+    { "=[]",      True,      bstack }
 };
 
 /* tagging */
@@ -61,7 +64,7 @@ static const Tag tags[] = {
 	{"",       &layouts[0],   -1,       -1},
 	{"",       &layouts[2],   -1,       -1},
 	{"",       &layouts[3],   -1,       -1},
-	{"4",       &layouts[0],   -1,       -1},
+	{"",       &layouts[3],   -1,       -1},
 	{"5",       &layouts[0],   -1,       -1},
 	{"6",       &layouts[0],   -1,       -1}
 };
@@ -69,6 +72,7 @@ static const Tag tags[] = {
 static const Rule rules[] = {
     /* class      instance    title       tags mask     isfloating   monitor */
     { "Firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
+    { "Thunar",   NULL,       NULL,       1 << 3,       0,           -1 }
 };
 
 /* key definitions */
@@ -88,11 +92,13 @@ static const Rule rules[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", colors[0][2], "-nf", colors[0][1], "-sb", colors[1][2], "-sf", colors[1][1], NULL };
 static const char *termcmd[]  = { "urxvt", NULL };
+static const char *filecmd[]  = { "thunar", NULL };
 
 static Key keys[] = {
     /* modifier                     key        function        argument */
     { MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
     { MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+    { MODKEY,                       XK_n,      spawn,          {.v = filecmd } },
     { MODKEY,                       XK_b,      togglebar,      {0} },
     { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
     { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
